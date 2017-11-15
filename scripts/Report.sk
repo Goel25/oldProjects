@@ -1,0 +1,60 @@
+function report(type: text="NULL123", arg2: text="NULL123", arg3: text="NULL123", p: player):
+	if {_type} is "NULL123":
+		delete {_type}
+	if {_arg2} is "NULL123":
+		delete {_arg2}
+	if {_arg3} is "NULL123":
+		delete {_arg3}
+	if {_type} is "hacker" or "hackers" or "hack" or "hacks" or "bug" or "bugs" or "glitch" or "glitches" or "error":
+		if {_type} is "hacker" or "hackers" or "hack" or "hacks":
+			set {_p2} to {_arg2} parsed as offline player
+			if {_p2} has played on this server before:
+				if {_arg3} is not set:
+					message "&cPlease enter what kind of hacks %{_p}% is using!" to {_p}
+					stop
+				else if {_arg3} is set:
+					log """%{_p2}%"" has been reported for using ""%{_arg3}%"" by ""%{_p}%""" to "Report.log"
+					message "&6&l%{_p2}% &ahas been reported for using &6&l%{_arg3}% &aby &6&l%{_p}%" to {_p}
+					set {report.cooldown::%{_p}%} to now
+			else:
+				if {_arg2} is not set:
+					message "&cPlease specify who you are reporting!" to {_p}
+					stop
+				else:
+					message "&c%{_arg2}% has never played on this server before!" to {_p}
+					stop
+		else if {_type} is "bug" or "bugs" or "glitch" or "glitches" or "error":
+			if {_arg3} is not set:
+				message "&cPlease enter what bug/glitch you have found!" to {_p}
+				stop
+			else if {_arg3} is set:
+				log """%{_p}%"" has reported that ""%{_arg2}% %{_arg3}%""" to "Report.log"
+				message "&6&l%{_p}% &ahas reported that &6&l%{_arg2}% %{_arg3}%" to {_p}
+				set {report.cooldown::%{_p}%} to now
+				stop	
+		stop
+	else:
+		message "&cPlease use &c&l/report bug &cor &c&l/report hacker" to {_p}
+		stop
+
+command /report [<text="NULL123">] [<text="NULL123">] [<text="NULL123">]: #First arg is for type, second for player or the bug, and third for the type of hack
+	trigger:
+		if difference between {report.cooldown::%player%} and now is greater than 1 hour:
+			report(argument 1, argument 2, argument 3, player)
+			stop
+		else if difference between {report.cooldown::%player%} and now is less than 1 hour:
+			set {_diff} to difference between {report.cooldown::%player%} and now
+			set {_diff} to difference between {_diff} and 1 hour
+			wait 1 tick
+			message "&c&lYou must wait %{_diff}% before using this again"
+			stop
+		else:
+			report(argument 1, argument 2, argument 3, player)
+on first join:
+	if {report.cooldown::%player%} is not set:
+		set {report.cooldown::%player%} to now
+
+
+
+#log "%player% has been sneaking around in %world of player% at %location of player%" to "Report.log"
+#log "%player% reported %arg-1% for %arg-2% in %world of player% at %location of player%" to "report.log"

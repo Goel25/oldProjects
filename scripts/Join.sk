@@ -1,0 +1,59 @@
+on first join:
+	wait 5 ticks
+	teleport player to location at 74.5, 180, -295.5 in "Islands"
+	broadcast "&aWelcome &6&l%player% &ato survival!"
+	send player title "&aType &6&l/begin &ato start" with subtitle "&ayour adventure!" for 10 seconds
+	give player 1 stone sword
+	give player 1 stone pickaxe
+	give player 1 stone axe
+	give player 32 steak
+	give player 16 oak log
+	give player 1 gold shovel named "&6Land Claimer" with lore "Right click each corner to create a claim!"
+	give player 1 iron chestplate named "&7&lCoal Jetpack" with lore "&aThe default Jetpack!"
+	give player 32 coal
+
+command /begin:
+	aliases: start, islands
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		if {begin.cooldown::%player%} is not set:
+			message "&6You will be teleported &c3 &6seconds."
+			set {_loc} to location x coord of player, y coord of player, z coord of player in world world of player
+			loop 60 times:
+				set {_loc1} to location x coord of player, y coord of player, z coord of player in world world of player
+				if {_loc1} isn't {_loc}:
+					message "&cYou have moved! Teleportation canceled!"
+					stop
+				wait 1 tick
+			set {begin.cooldown::%player%} to now
+			run player command "/rtp Islands" as op
+			stop
+		if difference between {begin.cooldown::%player%} and now is greater than 60 seconds: 
+			message "&6You will be teleported &c3 &6seconds."
+			set {_loc} to location x coord of player, y coord of player, z coord of player in world world of player
+			loop 60 times:
+				set {_loc1} to location x coord of player, y coord of player, z coord of player in world world of player
+				if {_loc1} isn't {_loc}:
+					message "&cYou have moved! Teleportation canceled!"
+					stop
+				wait 1 tick
+			set {begin.cooldown::%player%} to now
+			run player command "/rtp Islands" as op
+			stop
+		else if difference between {begin.cooldown::%player%} and now is less than 60 seconds:
+			set {_diff} to difference between {begin.cooldown::%player%} and now
+			set {_diff} to difference between {_diff} and 1 minute
+			wait 1 tick
+			message "&c&lYou must wait %{_diff}% before using this again"
+		
+on command:
+	if command is "rtp" or "randomteleport" or "randomtp":
+		if arguments contain "mine":
+			set {_this.does.nothing} to true
+		else:
+			if arguments contain "Islands":
+				{begin.%player%} is not set
+			else if arguments do not contain "Islands":
+				cancel event

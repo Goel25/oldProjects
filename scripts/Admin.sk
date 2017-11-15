@@ -1,0 +1,61 @@
+command /admin:
+	trigger:
+		if player has permission "skript.mod":
+			if {admin.toggle.%player%} is false:
+				loop 41 times:
+					set {admin.%player%::%loop-num - 1%} to slot loop-num - 1 of player
+				wait 3 ticks
+				loop 41 times:
+					set slot loop-num - 1 of player to air
+				wait 2 ticks
+				set {admin.pos.%player%} to player's location
+				set player's gamemode to spectator
+				play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+				run player command "/v on %player%" as op
+				run player command "dynmap hide" as op
+				set {admin.toggle.%player%} to true
+				message "&6&lADMIN MODE ENABLED!"
+				stop
+			else:
+				if {admin.toggle.%player%} is not set:
+					set {admin.toggle.%player%} to false
+					message "&aOk, your all set! Just do &6&l/admin&a again!"
+					stop
+				else:
+					set {_s} to 0
+					loop {admin.%player%::*}:
+						set slot {_s} of player to loop-value
+						add 1 to {_s}
+					wait 2 ticks
+					teleport player to {admin.pos.%player%}
+					set player's gamemode to survival
+					set {admin.toggle.%player%} to false
+					play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+					run player command "/v off %player%" as op
+					run player command "dynmap show" as op
+					message "&6&lADMIN MODE DISABLED!"
+					stop
+		else:
+			message "You are not allowed to do this!"
+on quit:
+	if player's name is "Flipkidd":
+		execute console command "/v on Flipkidd"
+on join:
+	wait 4 ticks
+	if player's name is "Flipkidd":
+		send player title "&c&lYou're vanished!"
+on join:
+	wait 3 ticks
+	if {admin.toggle.%player%} is true:
+		send player title "&c&lYOU ARE STILL IN ADMIN!" with subtitle "&ADo &6&l/admin &ato get out of admin mode" for 15 seconds
+#		set {_s} to 0
+#		loop {admin.%player%::*}:
+#			set slot {_s} of player to loop-value
+#			add 1 to {_s}
+#		wait 2 ticks
+#		teleport player to {admin.pos.%player%}
+#		set player's gamemode to survival
+#		set {admin.toggle.%player%} to false
+#		play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+#		run player command "/v" as op
+#		message "&6&lADMIN MODE DISABLED!"

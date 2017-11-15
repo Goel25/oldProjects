@@ -1,0 +1,159 @@
+options:
+	NoEnergy: &aYou are out of energy!
+	Solarname:&6&lSolar Jetpack
+	Solarprefix: &7[&6&lSolar Jetpack&7]
+	Lore:&aHarness the power of the sun!
+# ____        _                  _      _                    _    
+#/ ___|  ___ | | __ _ _ __      | | ___| |_ _ __   __ _  ___| | __
+#\___ \ / _ \| |/ _` | '__|  _  | |/ _ \ __| '_ \ / _` |/ __| |/ /
+# ___) | (_) | | (_| | |    | |_| |  __/ |_| |_) | (_| | (__|   < 
+#|____/ \___/|_|\__,_|_|     \___/ \___|\__| .__/ \__,_|\___|_|\_\
+#                                          |_|                    
+on fly toggle:
+	player is not flying
+	player's gamemode is survival
+	lore of chestplate of player contains "{@Lore}"
+	set {_loc} to player's location
+	if {Energy.%player%} <= 0:
+		cancel event
+		wait 1 tick
+		teleport player to {_loc}
+		play raw sound "entity.item.break" for player at player with pitch 1 volume 15
+		message "{@Solarprefix} {@NoEnergy}"
+	else:
+		wait 1 tick
+		while player is flying:
+			if lore of chestplate of player contains "{@Lore}":
+				if {Energy.%player%} <= 0:
+					push player up at speed 0.25
+					play raw sound "entity.item.break" for player at player with pitch 1 volume 15
+					message "{@Solarprefix} {@NoEnergy}"
+					disallow fly for player
+					stop
+				else:
+					if player doesn't have permission "skript.crafter":
+						if player has permission "skript.vip":
+							set action bar of player to "&6&l%{Energy.%player%}% &7Energy"
+							remove 0.5 from {Energy.%player%}
+						else:
+							set action bar of player to "&6&l%{Energy.%player%}% &7Energy"
+							remove 1 from {Energy.%player%}
+					if player is offline:
+						stop
+				wait 1.5 seconds
+			else:
+				play raw sound "entity.item.break" for player at player with pitch 1 volume 15
+				disallow fly for player
+				wait 1 second
+				allow fly for player
+
+every 1 second:
+	loop all players:
+		loop-player's gamemode is survival
+		if lore of chestplate of loop-player contains "{@Lore}":
+			if loop-player is flying:
+				if {Energy.%loop-player%} is less than 51:
+					{Energy.%loop-player%} is more than 0
+					set flying speed of loop-player to .1
+				if {Energy.%loop-player%} is less than 101:
+					{Energy.%loop-player%} is more than 50
+					if {SJMax.%loop-player%} is less than .16:
+						set flying speed of loop-player to {SJMax.%loop-player%}
+					else:
+						set flying speed of loop-player to .15
+				if {Energy.%loop-player%} is less than 151:
+					{Energy.%loop-player%} is more than 100
+					if {SJMax.%loop-player%} is less than .2:
+						set flying speed of loop-player to {SJMax.%loop-player%}
+					else:
+						set flying speed of loop-player to .2
+				if {Energy.%loop-player%} is less than 201:
+					{Energy.%loop-player%} is more than 150
+					if {SJMax.%loop-player%} is less than .25:
+						set flying speed of loop-player to {SJMax.%loop-player%}
+					else:
+						set flying speed of loop-player to .25
+				if {Energy.%loop-player%} is more than 200:
+					set flying speed of loop-player to {SJMax.%loop-player%}
+		else:
+			set flight speed of loop-player to .1
+
+command /sj <text> [<number>]:
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		wait 2 ticks
+		if arg-1 is "max" or "maximum":
+			if arg 2 is set:
+				set {_1} to arg 2
+				if {_1} is bigger than 3:
+					message "&aYour max speed is now &63!"
+					set {SJMax.%player%} to .3
+					stop
+				if {_1} >= 1:
+					set {_2} to {_1}/10
+					set {SJMax.%player%} to {_2}
+					message "&aYour max speed is now &6%arg 2%!"
+				else:
+					message "&cYou cannot have a max speed of &c&l%arg 2%"
+			else:
+				set {_3} to {SJMax.%player%}*10
+				message "&aYou current max speed is &6%{_3}%"
+		else:
+			message "&c&l%arg 1% is not max or maximum"
+on first join:
+	set {SJMax.%player%} to 3
+#Effects
+on fly toggle:
+	player's gamemode is survival
+	lore of chestplate of player contains "{@Lore}"
+	wait 1 tick
+	while player is flying:
+		if player's gamemode is survival:
+			drawDot count 5, particle "redstone", RGB 255, 127, 80, center player, rainbowMode false, visibleRange 32, pulseDelay 0, keepFor 2 ticks
+			play raw sound "block.note.basedrum" for player at player with pitch 1 volume 1
+			wait 3 ticks
+		else:
+			stop trigger
+		if player is offline:
+			stop trigger
+
+
+#	 _____           _ _ 
+#	|  ___|   _  ___| | |
+#	| |_ | | | |/ _ \ | |
+#	|  _|| |_| |  __/ |_|
+#	|_|   \__,_|\___|_(_)
+
+on first join:
+	set {Energy.%player%} to 0
+every 1 second:
+	loop all players:
+		if loop-player has permission "skript.crafter":
+			set {Energy.%loop-player%} to 400
+			stop
+		else:
+			{Energy.%loop-player%} is less than 400
+			lore of chestplate of loop-player contains "{@Lore}"
+			loop-player is not flying
+			if sunlight level at the loop-player is 15:
+				if time in the loop-player's world is greater than 6:00:
+					if time in the loop-player's world is less than 18:00:
+						loop blocks in radius 3 of loop-player:
+							loop-block's y location is less than loop-player's y location
+							set {_2y} to loop-player's y location - 2
+							loop-block's y location is greater than {_2y}
+							if loop-block is not air:
+								add 1 to {Energy.%loop-player%}
+								set action bar of loop-player to "&aEnergy: &6&l%{Energy.%loop-player%}%"
+							#	set action bar of player to "&6&l%{Energy.%loop-player%}% &7Energy"
+								stop
+
+command /energy <number>:
+	trigger:
+		if player is op:
+			set {Energy.%player%} to arg 1
+			message "&aYou now have &6%arg 1%&a energy!"
+		else:
+			message "&cNice try, but you arn't allowed to do this!"

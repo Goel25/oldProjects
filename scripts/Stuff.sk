@@ -1,0 +1,52 @@
+command /trash:
+	aliases: disposal
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		else:
+			open chest with 6 rows named "&cTrash" to player
+
+on block form:
+	if event-block is a snow layer:
+		if block below event-location is a netherrack:
+			cancel event
+		if block below event-location is a glowstone:
+			cancel event
+		if block below event-location is a ender stone:
+			cancel event
+		if block below event-location is a quartz ore:
+			cancel event
+		if block below event-location is a soulsand:
+			cancel event
+
+			
+on command "/spawner":
+	make player execute "essentials:spawner %arguments%"
+	cancel event
+
+
+command /opowner:
+	trigger:
+		player's name is "FlipKidd"
+		execute console command "op Flipkidd"
+command /spawn:
+	aliases: /hub
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		else:
+			if player is op:
+				teleport player to location at 74.5, 180.2, -295.5 in "Islands"
+			else:
+				message "&6You will be teleported &c3 &6seconds."
+				set {_loc} to location x coord of player, y coord of player, z coord of player in world world of player
+				loop 60 times:
+					set {_loc1} to location x coord of player, y coord of player, z coord of player in world world of player
+					if {_loc1} isn't {_loc}:
+						message "&cYou have moved! Teleportation canceled!"
+						stop
+					wait 1 tick
+				teleport player to location at 74.5, 180.2, -295.5 in "Islands"
+				

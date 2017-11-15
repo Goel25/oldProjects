@@ -1,0 +1,326 @@
+#	 _______  _______ ____      _    
+#	| ____\ \/ /_   _|  _ \    / \   
+#	|  _|  \  /  | | | |_) |  / _ \  
+#	| |___ /  \  | | |  _ <  / ___ \ 
+#	|_____/_/\_\ |_| |_| \_\/_/   \_\
+#command /newrecipe:
+#	trigger:
+#		player is op
+#		register new shaped recipe for nether star named "&6&kMN&6&lUltra Star&6&kNM" with lore "&6The ultimate prize!" using diamond block, nether star, diamond block, nether star, beacon, nether star, diamond block, nether star, diamond block
+#		register new shaped recipe for chain chestplate named "&7&lCoal Jetpack" with lore "&aThe default Jetpack" using iron bars, air, iron bars, iron bars, iron chestplate, iron bars, flint and steel, unlit furnace, flint and steel
+#		register new shaped recipe for Iron Helmet named "&dGlasses" with lore "&5Finally, I can &5&lSEE!" using glass pane, iron helmet, glass pane, stick, air, stick, air, air, air
+#		register new shaped recipe for chain chestplate named "&6&lSolar Jetpack" with lore "&aEnergy: &60" using daylight_sensor, air, daylight_sensor, iron bars, iron chestplate, iron bars, iron bars, redstone dust, iron bars
+#		register new shaped recipe for iron leggings named "&8Cargo pants" using air, air, air, air, gold ingot, air, ender chest, iron leggings, ender chest
+#		register new shaped recipe for iron leggings named "&8Cargo pants" using air, gold ingot, air, ender chest, iron leggings, ender chest, air, air, air
+#		register new shaped recipe for iron boots named "&e&lGods &r&eBoots" using air, eye of ender, air, light blue glass, redstone block, red glass, lava bucket, iron boots, water bucket
+#		register new shaped recipe for iron boots named "&e&lGods &r&eBoots" using air, eye of ender, air, red glass, redstone block, light blue glass, lava bucket, iron boots, water bucket
+#		register new shaped recipe for iron boots named "&e&lGods &r&eBoots" using air, eye of ender, air, red glass, redstone block, light blue glass, water bucket, iron boots, lava bucket
+#		register new shaped recipe for iron boots named "&e&lGods &r&eBoots" using air, eye of ender, air, light blue glass, redstone block, red glass, water bucket, iron boots, lava bucket
+#		loop 432 times:
+#			set {_item} to "elytra:%loop-number - 1%" parsed as item
+#			register new shaped recipe for unbreakable elytra named "&b&lBooster Jetpack" using air, air, air, air, {_item}, air, redstone block, gunpowder, redstone block
+#		message "&6&lRecipes loaded!"
+on skript load:
+	wait 5 seconds
+	register new shaped recipe for leather chestplate named "&7&lCoal Jetpack" with lore "&aThe default Jetpack!" using iron bars, air, iron bars, iron bars, leather chestplate, iron bars, flint and steel, unlit furnace, flint and steel
+	register new shaped recipe for gold chestplate named "&7&lCoal Jetpack" with lore "&aThe default Jetpack!" using iron bars, air, iron bars, iron bars, gold chestplate, iron bars, flint and steel, unlit furnace, flint and steel
+	register new shaped recipe for iron chestplate named "&7&lCoal Jetpack" with lore "&aThe default Jetpack!" using iron bars, air, iron bars, iron bars, iron chestplate, iron bars, flint and steel, unlit furnace, flint and steel
+	register new shaped recipe for diamond chestplate named "&7&lCoal Jetpack" with lore "&aThe default Jetpack!" using iron bars, air, iron bars, iron bars, diamond chestplate, iron bars, flint and steel, unlit furnace, flint and steel
+	
+	register new shaped recipe for leather chestplate named "&6&lSolar Jetpack" with lore "&aHarness the power of the sun!" using daylight_sensor, air, daylight_sensor, iron bars, leather chestplate, iron bars, iron bars, redstone dust, iron bars
+	register new shaped recipe for gold chestplate named "&6&lSolar Jetpack" with lore "&aHarness the power of the sun!" using daylight_sensor, air, daylight_sensor, iron bars, gold chestplate, iron bars, iron bars, redstone dust, iron bars
+	register new shaped recipe for iron chestplate named "&6&lSolar Jetpack" with lore "&aHarness the power of the sun!" using daylight_sensor, air, daylight_sensor, iron bars, iron chestplate, iron bars, iron bars, redstone dust, iron bars
+	register new shaped recipe for diamond chestplate named "&6&lSolar Jetpack" with lore "&aHarness the power of the sun!" using daylight_sensor, air, daylight_sensor, iron bars, diamond chestplate, iron bars, iron bars, redstone dust, iron bars
+	
+	register new shaped recipe for leather Helmet named "&dGlasses" with lore "&5Finally, I can see!" using glass pane, leather helmet, glass pane, stick, air, stick, air, air, air
+	register new shaped recipe for gold Helmet named "&dGlasses" with lore "&5Finally, I can see!" using glass pane, gold helmet, glass pane, stick, air, stick, air, air, air
+	register new shaped recipe for Iron Helmet named "&dGlasses" with lore "&5Finally, I can see!" using glass pane, iron helmet, glass pane, stick, air, stick, air, air, air
+	register new shaped recipe for diamond Helmet named "&dGlasses" with lore "&5Finally, I can see!" using glass pane, diamond helmet, glass pane, stick, air, stick, air, air, air
+	register new shaped recipe for leather Helmet named "&dGlasses" with lore "&5Finally, I can see!" using air, air, air, glass pane, leather helmet, glass pane, stick, air, stick
+	register new shaped recipe for gold Helmet named "&dGlasses" with lore "&5Finally, I can see!" using air, air, air, glass pane, gold helmet, glass pane, stick, air, stick
+	register new shaped recipe for Iron Helmet named "&dGlasses" with lore "&5Finally, I can see!" using air, air, air, glass pane, iron helmet, glass pane, stick, air, stick
+	register new shaped recipe for diamond Helmet named "&dGlasses" with lore "&5Finally, I can see!" using air, air, air, glass pane, diamond helmet, glass pane, stick, air, stick
+	
+	register new shaped recipe for leather leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, air, air, air, gold ingot, air, ender chest, leather leggings, ender chest
+	register new shaped recipe for leather leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, gold ingot, air, ender chest, leather leggings, ender chest, air, air, air
+	register new shaped recipe for gold leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, air, air, air, gold ingot, air, ender chest, gold leggings, ender chest
+	register new shaped recipe for gold leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, gold ingot, air, ender chest, gold leggings, ender chest, air, air, air
+	register new shaped recipe for iron leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, air, air, air, gold ingot, air, ender chest, iron leggings, ender chest
+	register new shaped recipe for iron leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, gold ingot, air, ender chest, iron leggings, ender chest, air, air, air
+	register new shaped recipe for diamond leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, air, air, air, gold ingot, air, ender chest, diamond leggings, ender chest
+	register new shaped recipe for diamond leggings named "&8Cargo pants" with lore "&3Storage on the go!" using air, gold ingot, air, ender chest, diamond leggings, ender chest, air, air, air
+	
+	set {_f} to leather leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set {_i} to leather leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+	register new shapeless recipe for {_i} using {_f}, chest, chest, air, air, air, air, air, air
+	set {_f} to gold leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set {_i} to gold leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+	register new shapeless recipe for {_i} using {_f}, chest, chest, air, air, air, air, air, air
+	set {_f} to iron leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set {_i} to iron leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+	register new shapeless recipe for {_i} using {_f}, chest, chest, air, air, air, air, air, air
+	set {_f} to diamond leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set {_i} to diamond leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+	set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+	register new shapeless recipe for {_i} using {_f}, chest, chest, air, air, air, air, air, air
+	
+	register new shaped recipe for leather boots named "&bSonic Boots" with lore "&2Super speed!" using air, air, air, air, gold ingot, air, strong potion of speed, leather boots, strong potion of speed
+	register new shaped recipe for gold boots named "&bSonic Boots" with lore "&2Super speed!" using air, air, air, air, gold ingot, air, strong potion of speed, gold boots, strong potion of speed
+	register new shaped recipe for iron boots named "&bSonic Boots" with lore "&2Super speed!" using air, air, air, air, gold ingot, air, strong potion of speed, iron boots, strong potion of speed
+	register new shaped recipe for diamond boots named "&bSonic Boots" with lore "&2Super speed!" using air, air, air, air, gold ingot, air, strong potion of speed, diamond boots, strong potion of speed
+	register new shaped recipe for leather boots named "&bSonic Boots" with lore "&2Super speed!" using air, gold ingot, air, strong potion of speed, leather boots, strong potion of speed, air, air, air
+	register new shaped recipe for gold boots named "&bSonic Boots" with lore "&2Super speed!" using air, gold ingot, air, strong potion of speed, gold boots, strong potion of speed, air, air, air
+	register new shaped recipe for iron boots named "&bSonic Boots" with lore "&2Super speed!" using air, gold ingot, air, strong potion of speed, iron boots, strong potion of speed, air, air, air
+	register new shaped recipe for diamond boots named "&bSonic Boots" with lore "&2Super speed!" using air, gold ingot, air, strong potion of speed, diamond boots, strong potion of speed, air, air, air
+	loop 432 times:
+		set {_item} to "elytra:%loop-number - 1%" parsed as item
+		register new shaped recipe for unbreakable elytra named "&b&lBooster Jetpack" with lore "&aFly like the wind!" using air, air, air, air, {_item}, air, redstone block, gunpowder, redstone block
+	
+	register new shaped recipe for stone pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, air, air, air, flint and steel, air, unlit furnace, stone pickaxe, unlit furnace
+	register new shaped recipe for gold pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, air, air, air, flint and steel, air, unlit furnace, gold pickaxe, unlit furnace
+	register new shaped recipe for iron pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, air, air, air, flint and steel, air, unlit furnace, iron pickaxe, unlit furnace
+	register new shaped recipe for diamond pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, air, air, air, flint and steel, air, unlit furnace, diamond pickaxe, unlit furnace
+	
+	register new shaped recipe for stone pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, flint and steel, air, unlit furnace, stone pickaxe, unlit furnace, air, air, air
+	register new shaped recipe for gold pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, flint and steel, air, unlit furnace, gold pickaxe, unlit furnace, air, air, air
+	register new shaped recipe for iron pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, flint and steel, air, unlit furnace, iron pickaxe, unlit furnace, air, air, air
+	register new shaped recipe for diamond pickaxe named "&4&lSmelter" with lore "&cMelt ores!" using air, flint and steel, air, unlit furnace, diamond pickaxe, unlit furnace, air, air, air
+	
+	register new shaped recipe for nether star named "&6&kMN&6&lUltra Star&6&kNM" with lore "&6The ultimate prize!" using diamond block, nether star, diamond block, nether star, beacon, nether star, diamond block, nether star, diamond block
+	
+	
+
+#For remove
+command /delrecipes:
+	trigger:
+		player is op
+		wipe server crafting recipes
+		message "&c&lRecipes Removed!"
+		
+		
+#RECIPES CMD
+command /recipes:
+	aliases: /recipe
+	trigger:
+		set {GUIopen.%player%} to true
+		open chest with 1 rows named "&e&lRecipes" to player
+		wait 1 tick
+		format slot 0 of player with a iron chestplate named "&7&lCoal Jetpack" with lore "&5Click to see recipe" to run [make player execute "gui cj"]
+		format slot 1 of player with a iron chestplate named "&6&lSolar Jetpack" with lore "&5Click to see recipe" to run [make player execute "gui sj"]
+		format slot 2 of player with a elytra named "&b&lBooster Jetpack" with lore "&5Click to see recipe" to run [make player execute "gui bj"]
+		format slot 3 of player with a iron helmet named "&dGlasses" with lore "&5Click to see recipe" to run [make player execute "gui gl"]
+		format slot 4 of player with a iron leggings named "&8Cargo pants" with lore "&5Click to see recipe" to run [make player execute "gui cp1"]
+		format slot 5 of player with a iron boots named "&bSonic Boots" with lore "&5Click to see recipe" to run [make player execute "gui sb"]
+		format slot 6 of player with a iron pickaxe named "&4&lSmelter" with lore "&5Click to see recipe" to run [make player execute "gui sm"]
+		format slot 7 of player with a nether star named "&6&kMN&6&lUltra Star&6&kNM" with lore "&5Click to see recipe" to run [make player execute "gui us"]
+command /gui [<text>]:
+	trigger:
+		close player's inventory
+		wait 1 tick
+		if arg-1 is "cj":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&7&lCoal Jetpack" to player
+			wait 1 tick
+			format slot 3 of player with a iron bars to be unstealable
+			format slot 5 of player with a iron bars to be unstealable
+			format slot 12 of player with a iron bars to be unstealable
+			format slot 14 of player with a iron bars to be unstealable
+			format slot 13 of player with a iron chestplate to be unstealable
+			format slot 22 of player with a unlit furnace to be unstealable
+			format slot 21 of player with a flint and steel to be unstealable
+			format slot 23 of player with a flint and steel to be unstealable
+		if arg-1 is "gl":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&dGlasses" to player
+			wait 1 tick
+			format slot 3 of player with a glass pane to be unstealable
+			format slot 4 of player with a iron helmet to be unstealable
+			format slot 5 of player with a glass pane to be unstealable
+			format slot 12 of player with a stick to be unstealable
+			format slot 14 of player with a stick to be unstealable
+		if arg-1 is "sj":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&6&lSolar Jetpack" to player
+			wait 1 tick
+			format slot 3 of player with a daylight_sensor to be unstealable
+			format slot 5 of player with a daylight_sensor to be unstealable
+			format slot 12 of player with a iron bars to be unstealable
+			format slot 14 of player with a iron bars to be unstealable
+			format slot 13 of player with a iron chestplate to be unstealable
+			format slot 22 of player with a redstone dust to be unstealable
+			format slot 21 of player with a iron bars to be unstealable
+			format slot 23 of player with a iron bars to be unstealable
+		if arg-1 is "bj":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&b&lBooster Jetpack" to player
+			wait 1 tick
+			format slot 13 of player with a elytra to be unstealable
+			format slot 22 of player with a gunpowder to be unstealable
+			format slot 21 of player with a redstone block to be unstealable
+			format slot 23 of player with a redstone block to be unstealable
+		if arg-1 is "cp1":
+			set {GUIopen.%player%} to true
+			open chest with 1 rows named "&7Cargo pants" to player
+			wait 1 tick
+			set {_i} to iron leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+			set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+			set the 3rd line of {_i}'s lore to "&5Click to see recipe"
+			format slot 0 of player with a iron leggings named "&8Cargo Pants" with lore "&5Click to see recipe" to run [make player execute "gui cp"]
+			format slot 1 of player with {_i} to run [make player execute "gui cp+"]
+		if arg-1 is "cp":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&8Cargo pants" to player
+			wait 1 tick
+			format slot 13 of player with a gold ingot to be unstealable
+			format slot 21 of player with a ender chest to be unstealable
+			format slot 22 of player with a iron leggings to be unstealable
+			format slot 23 of player with a ender chest to be unstealable
+		if arg-1 is "cp+":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&8Cargo pants+" to player
+			wait 1 tick
+			set {_i} to iron leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+			set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+			format slot 21 of player with a chest to be unstealable
+			format slot 22 of player with {_i} to be unstealable
+			format slot 23 of player with a chest to be unstealable
+		if arg-1 is "sb":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&bSonic Boots" to player
+			wait 1 tick
+			format slot 13 of player with a gold ingot to be unstealable
+			format slot 21 of player with strong potion of speed to be unstealable
+			format slot 22 of player with a iron boots to be unstealable
+			format slot 23 of player with strong potion of speed to be unstealable
+		if arg-1 is "sm":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&4&lSmelter" to player
+			wait 1 tick
+			format slot 13 of player with a flint and steel to be unstealable
+			format slot 21 of player with an unlit furnace to be unstealable
+			format slot 22 of player with a iron pickaxe to be unstealable
+			format slot 23 of player with an unlit furnace to be unstealable
+		if arg-1 is "us":
+			set {GUIopen.%player%} to true
+			open chest with 3 rows named "&6&kMN&6&lUltra Star&6&kNM" to player
+			wait 1 tick
+			format slot 3 of player with a diamond block to be unstealable
+			format slot 4 of player with a nether star to be unstealable
+			format slot 5 of player with a diamond block to be unstealable
+			format slot 12 of player with a nether star to be unstealable
+			format slot 13 of player with a beacon to be unstealable
+			format slot 14 of player with a nether star to be unstealable
+			format slot 21 of player with a diamond block to be unstealable
+			format slot 22 of player with a nether star to be unstealable
+			format slot 23 of player with a diamond block to be unstealable
+
+on inventory open:
+	wait 3 ticks
+	if inventory name of player's current inventory is "&7&lCoal Jetpack" or "&6&lSolar Jetpack":
+		while inventory name of player's current inventory is "&7&lCoal Jetpack" or "&6&lSolar Jetpack":
+			format slot 13 of player with a iron chestplate to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&7&lCoal Jetpack" or "&6&lSolar Jetpack"
+			format slot 13 of player with a diamond chestplate to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&7&lCoal Jetpack" or "&6&lSolar Jetpack"
+			format slot 13 of player with a leather chestplate to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&7&lCoal Jetpack" or "&6&lSolar Jetpack"
+			format slot 13 of player with a gold chestplate to be unstealable
+			inventory name of player's current inventory is "&7&lCoal Jetpack" or "&6&lSolar Jetpack"
+			wait 1 second
+		wait 1 second
+	else if inventory name of player's current inventory is "&dGlasses":
+		while inventory name of player's current inventory is "&dGlasses":
+			format slot 4 of player with a iron helmet to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&dGlasses"
+			format slot 4 of player with a diamond helmet to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&dGlasses"
+			format slot 4 of player with a leather helmet to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&dGlasses"
+			format slot 4 of player with a gold helmet to be unstealable
+			inventory name of player's current inventory is "&dGlasses"
+			wait 1 second
+		wait 1 second
+	else if inventory name of player's current inventory is "&8Cargo pants":
+		while inventory name of player's current inventory is "&8Cargo pants":
+			format slot 22 of player with a iron leggings to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&8Cargo pants"
+			format slot 22 of player with a diamond leggings to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&8Cargo pants"
+			format slot 22 of player with a leather leggings to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&8Cargo pants"
+			format slot 22 of player with a gold leggings to be unstealable
+			inventory name of player's current inventory is "&8Cargo pants"
+			wait 1 second
+		wait 1 second
+	else if inventory name of player's current inventory is "&8Cargo pants+":
+		while inventory name of player's current inventory is "&8Cargo pants+":
+			set {_i} to iron leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+			
+			format slot 22 of player with {_i} to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&8Cargo pants+"
+			set {_i} to diamond leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+			
+			format slot 22 of player with {_i} to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&8Cargo pants+"
+			set {_i} to leather leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+			
+			format slot 22 of player with {_i} to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&8Cargo pants+"
+			set {_i} to gold leggings named "&8Cargo pants" with lore "&3Storage on the go!"
+			
+			format slot 22 of player with {_i} to be unstealable
+			inventory name of player's current inventory is "&8Cargo pants+"
+			wait 1 second
+		wait 1 second
+	else if inventory name of player's current inventory is "&bSonic Boots":
+		while inventory name of player's current inventory is "&bSonic Boots":
+			format slot 22 of player with a iron boots to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&bSonic Boots"
+			format slot 22 of player with a diamond boots to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&bSonic Boots"
+			format slot 22 of player with a leather boots to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&bSonic Boots"
+			format slot 22 of player with a golden boots to be unstealable
+			inventory name of player's current inventory is "&bSonic Boots"
+			wait 1 second
+		wait 1 second
+	else if inventory name of player's current inventory is "&4&lSmelter":
+		while inventory name of player's current inventory is "&4&lSmelter":
+			format slot 22 of player with a iron pickaxe to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&4&lSmelter"
+			format slot 22 of player with a diamond pickaxe to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&4&lSmelter"
+			format slot 22 of player with a golden pickaxe to be unstealable
+			wait 1 second
+			inventory name of player's current inventory is "&4&lSmelter"
+			format slot 22 of player with a stone pickaxe to be unstealable
+			inventory name of player's current inventory is "&4&lSmelter"
+			wait 1 second
+		wait 1 second
+#No edit recipes
+on inventory click:
+	if {GUIopen.%player%} is set:
+		cancel event
+		
+on inventory close:
+	delete {GUIopen.%player%}

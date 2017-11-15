@@ -1,0 +1,80 @@
+options:
+	Health Bar: default # Choose your health bar (default = displays hearts accurately, iPadHD = Show Health Symbol and change colours depending on health)
+	Show Health Time: 3 seconds # How long should the health be shown for
+	Health Colour: &4 # The colour of health
+	Health Lose Colour: &0 # The colour of health lost
+	Health Symbol: ❤ # The symbol above the entities heads
+	Player Health: false # If true it will automatically set up scoreboards to display health below a players name
+	Scoreboard Text: Health # Name of the text displaying how much health the player has
+# Health Bar = iPadHD:
+	Health Medium Colour: &e # When someone has more health than Health Lose Colour and less health than Health Colour
+	Medium: 75 # What percent of health should the entity be at in order to display a Health Medium Colour colour
+	Low: 25 # What percent of health should the entity be at in order to display a Health Lose colour
+
+on load:
+	{@Player Health} is true
+	execute console command "scoreboard objectives add {@Scoreboard Text} health"
+	execute console command "scoreboard objectives setDisplay belowName {@Scoreboard Text}"
+on unload:
+	{@Player Health} is true
+	execute console command "scoreboard objectives remove {@Scoreboard Text}"
+
+on damage of player:
+	attacker is not a player
+	attacker is set
+	"%victim's gamemode%" is not "creative"
+	if {entityname.%attacker%} is set:
+		set name of attacker to {entityname.%attacker%}
+	else:
+		clear name of attacker
+
+on damage:
+	victim is not a player
+	victim is a ender dragon or wither:
+		stop
+	set {_healthbar} to "{@Health Bar}"
+	if {_healthbar} is "iPadHD":
+		set {_health} to max health of victim
+		set {_health.medium} to {_health} * 0.{@Medium}
+		set {_health.lose} to {_health} * 0.{@Low}
+		wait 1 tick
+		if victim's health is below {_health.medium}:
+			set name of victim to "{@Health Medium Colour}{@Health Symbol}"
+		if victim's health is below {_health.lose}:
+			set name of victim to "{@Health Lose Colour}{@Health Symbol}"
+		if victim's health is greater than {_health.medium}:
+			set name of victim to "{@Health Colour}{@Health Symbol}"
+		stop
+	wait 1 tick
+	loop 20 times:
+		set {_health.%loop-integer%.%victim%} to "{@Health Lose Colour}{@Health Symbol}"
+		loop-integer is greater than max health of victim
+		set {_health.%loop-integer%.%victim%} to ""
+	loop rounded health of victim times:
+		set {_health.%loop-integer%.%victim%} to "{@Health Colour}{@Health Symbol}"
+	set name of victim to "%{_health.1.%victim%}%%{_health.2.%victim%}%%{_health.3.%victim%}%%{_health.4.%victim%}%%{_health.5.%victim%}%%{_health.6.%victim%}%%{_health.7.%victim%}%%{_health.8.%victim%}%%{_health.9.%victim%}%%{_health.10.%victim%}%%{_health.11.%victim%}%%{_health.12.%victim%}%%{_health.13.%victim%}%%{_health.14.%victim%}%%{_health.15.%victim%}%%{_health.16.%victim%}%%{_health.17.%victim%}%%{_health.18.%victim%}%%{_health.19.%victim%}%%{_health.20.%victim%}%"
+	set {_displaytime} to now
+	while victim exists:
+		if difference between {_displaytime} and now is greater than {@Show Health Time}:
+			if {entityname.%victim%} is set:
+				set name of victim to {entityname.%victim%}
+				stop
+			clear name of victim
+			stop
+		wait 1 tick
+
+on right click on entity:
+	player is holding name tag
+	name of tool of player is set
+	clicked entity is not a player
+	set {entityname.%clicked entity%} to name of tool of player
+
+on right click:
+	clicked block is set
+	player is holding spawn egg
+	name of tool of player is set
+	set {_entityname} to name of tool of player
+	wait 1 tick
+	loop entities in radius 5 of clicked block:
+		name of loop-entity is {_entityname}
+		set {entityname.%loop-entity%} to name of loop-entity

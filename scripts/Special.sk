@@ -1,0 +1,215 @@
+#Glasses
+sharpsk On armor equip:
+	wait 2 ticks
+	if lore of event-item contains "&5Finally, I can see!":
+		apply night vision 10 to the player for 999999 second
+
+sharpsk On armor unequip:
+	if lore of event-item contains "&5Finally, I can see!":
+		remove night vision from the player
+
+#Cargo Pants
+command /p2:
+	trigger:
+		player is op
+		set {_i} to player's held item
+		set the 2nd line of {_i}'s lore to "&3Extra Storage!"
+command /pockets [<offline player>]:
+	aliases: /p, /pants, /pocket, /pockets, /cargopants, /cargo
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		if player is op:
+			player is op
+			if arg-1 is set:
+				if arg-1 has played on this server before:
+					open chest with 6 rows named "&6%arg-1%'s &8Pockets" to player
+					set {_s} to 0
+					loop {pockets.%arg-1%::*}:
+						set slot {_s} of player's current inventory to loop-value
+						add 1 to {_s}
+				else:
+					message "&c%arg-1% is not a player!"
+			else:
+				if lore of leggings of player contains "&3Storage on the go!":
+					set {_lore::*} to lore of player's leggings split at "||"
+					if {_lore::2} is "&3Extra Storage!":
+						open chest with 6 rows named "&8Pockets+" to player
+						set {_s} to 0
+						loop {pockets.%player%::*}:
+							set slot {_s} of player's current inventory to loop-value
+							add 1 to {_s}
+					else:
+						open chest with 3 rows named "&8Pockets" to player
+						set {_s} to 0
+						loop {pockets.%player%::*}:
+							if {_s} is less than 27:
+								set slot {_s} of player's current inventory to loop-value
+								add 1 to {_s}
+							else:
+								stop
+					stop
+				else:
+					send "&cYou are not wearing your &8Cargo pants&c!"
+		else:
+			if lore of leggings of player contains "&3Storage on the go!":
+				set {_lore::*} to lore of player's leggings split at "||"
+				if {_lore::2} is "&3Extra Storage!":
+					open chest with 6 rows named "&8Pockets+" to player
+					set {_s} to 0
+					loop {pockets.%player%::*}:
+						set slot {_s} of player's current inventory to loop-value
+						add 1 to {_s}
+				else:
+					open chest with 3 rows named "&8Pockets" to player
+					set {_s} to 0
+					loop {pockets.%player%::*}:
+						if {_s} is less than 27:
+							set slot {_s} of player's current inventory to loop-value
+							add 1 to {_s}
+						else:
+							stop
+				stop
+			else:
+				send "&cYou are not wearing your &8Cargo pants&c!"
+on inventory close:
+	if inventory name of player's current inventory is "&8Pockets":
+		loop 27 times:
+			set {pockets.%player%::%loop-num - 1%} to slot loop-num - 1 of player's current inventory
+	if inventory name of player's current inventory is "&8Pockets+":
+		loop 54 times:
+			set {pockets.%player%::%loop-num - 1%} to slot loop-num - 1 of player's current inventory
+
+#Speed Boots
+sharpsk On armor equip:
+	if lore of event-item contains "&2Super speed!":
+		apply speed 3 to the player for 999999 second
+
+sharpsk On armor unequip:
+	if lore of event-item contains "&2Super speed!":
+		remove speed from the player
+
+#Furnace Pick
+command /smelter:
+	trigger:
+		if player's name is "Flipkidd":
+			give player a diamond pickaxe named "&4&lSmelter" with lore "&cMelt ores!"
+		else:
+			message "&cYou can't do this!"
+on mine of iron ore:
+	lore of player's tool contains "&cMelt ores!"
+	cancel event
+	set event-block to air
+	wait 4 ticks
+	drop 1 iron ingot at event-block
+	damage player's tool by 1
+on mine of gold ore:
+	lore of player's tool contains "&cMelt ores!"
+	cancel event
+	set event-block to air
+	wait 4 ticks
+	drop 1 gold ingot at event-block
+	damage player's tool by 1
+on mine of stone or cobblestone:
+	lore of player's tool contains "&cMelt ores!"
+	cancel event
+	set event-block to air
+	wait 4 ticks
+	drop 1 stone at event-block
+	damage player's tool by 1
+
+#Ultra-Star
+#&6&kMN&6&lUltra Star&6&kNM" with lore "&6The ultimate prize!"
+every 1 second:
+	loop all players:
+		if lore of loop-player's offtool is "&6The ultimate prize!":
+			apply potion of regeneration 4 to loop-player for 3 seconds and hide particle effects
+			apply potion of resistance 4 to loop-player for 3 seconds and hide particle effects
+			apply potion of saturation 1 to loop-player for 3 seconds and hide particle effects
+		#	apply potion of speed 100 to loop-player for 3 seconds and hide particle effects
+		#	apply [potion of] %potioneffecttype% [potion] [[[of] tier] %-number%] to %livingentities% for %timespan% (and|to) hide [particle[ effects]]
+
+
+
+#on inventory click:
+#	message "1"
+#	if lore of player's offtool is "&6The ultime prize!":
+#		message "Ultra-Star Equipped!"
+#		apply regeneration 4 to the player for 999999 second
+#		apply resistance 4 to the player for 999999 second
+#		apply saturation 1 to the player for 999999 second
+#	else:
+#		message "Failure"
+#		remove regeneration from the player
+#		remove resistance from the player
+#		remove saturation from the player
+#on left click:
+#	message "1"
+#	if lore of player's offtool is "&6The ultime prize!":
+#		message "Ultra-Star Equipped!"
+#		apply regeneration 4 to the player for 999999 second
+#		apply resistance 4 to the player for 999999 second
+#		apply saturation 1 to the player for 999999 second
+#	else:
+#		message "Failure"
+#		remove regeneration from the player
+#		remove resistance from the player
+#		remove saturation from the player
+
+#RESPAWN GLITCH FIX!
+on respawn:
+	wait 5 ticks
+	if lore of helmet of player contains "&5Finally, I can see!":
+		apply night vision 10 to the player for 999999 second
+	if lore of boots of player contains "&2Super speed!":
+		apply speed 3 to the player for 999999 second
+
+on left click:
+	wait 5 ticks
+	gamemode of player is survival
+	if lore of helmet of player contains "&5Finally, I can see!":
+		apply night vision 10 to the player for 999999 second
+	else if lore of helmet of player doesn't contain "&5Finally, I can see!":
+		remove night vision from the player
+		
+		
+	if lore of boots of player contains "&2Super speed!":
+		apply speed 3 to the player for 999999 second
+	else if lore of boots of player doesn't contain "&2Super speed!":
+		remove speed from the player
+
+
+
+#on respawn:
+#	wait 1 seconds
+#	set {_helmet} to helmet of player
+#	set player's helmet to air
+#	wait 3 ticks
+#	set player's helmet to {_helmet}
+
+#on respawn:
+#	wait 1 seconds
+#	set {_boots} to boots of player
+#	set player's boots to air
+#	wait 3 ticks
+#	set player's boots to {_boots}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

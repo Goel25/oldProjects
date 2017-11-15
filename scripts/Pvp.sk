@@ -1,0 +1,91 @@
+command /pvp:
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		if {pvp.%player%} is true:
+			set {pvp.%player%} to false
+			message "&aYou can no longer fight with other players"
+			stop
+		if {pvp.%player%} is false:
+			set {pvp.%player%} to true
+			message "&aYou can now pvp"
+			stop
+		if {pvp.%player%} is not set:
+			set {pvp.%player%} to false
+			message "&aYou can not fight with other players"
+			stop
+on first join:
+	set {pvp.%player%} to false
+
+on damage:
+	attacker is a player
+	victim is a player
+	if attacker is victim:
+		stop
+	else:
+		if {pvp.%attacker%} is false:
+			cancel event
+			message "&cYou have pvp disabled!" to attacker
+			if tool of the attacker is enchanted with flame:
+				extinguish the victim
+			stop
+		if {pvp.%victim%} is false:
+			cancel event
+			message "&c%victim% has pvp disabled!" to attacker
+			if tool of the attacker is enchanted with flame:
+				extinguish the victim
+			stop
+		else:
+			if {Combatlog.%attacker%} is false:
+				message "&cYou have entered combat! &c&lDo not &clog out!"
+			if {Combatlog.%victim%} is false:
+				message "&cYou have entered combat! &c&lDo not &clog out!"
+			set {Combatlog.%attacker%} to true
+			set {Combatlog.%victim%} to true
+			loop 200 times:
+				set {Combatlog.%attacker%} to true
+				set {Combatlog.%victim%} to true
+				wait 1 tick
+			set {Combatlog.%attacker%} to false
+			set {Combatlog.%victim%} to false
+			wait 1 tick
+			if {Combatlog.%victim%} is false:
+				message "&cYou are no longer in combat!"
+
+on death:
+	if {Combatlog.%player%} is true:
+		if {pvp.%player%} is true:
+			wait 1 tick
+			loop all items in the player's inventory:
+				drop loop-item at player
+				remove loop-item from player
+			set player's helmet to air
+			set player's chestplate to air
+			set player's leggings to air
+			set player's boots to air
+			wait 2 ticks
+			set {Combatlog.%player%} to false
+		#	wait 1 tick
+		#	clear inventory of player
+		#	drop the player's inventory
+		#	force drop inventory of player #at the player
+on command:
+	if {Combatlog.%player%} is true:
+		cancel event
+		send "&cYou cannot use commands during combat! Please wait!"
+
+on quit:
+	if {Combatlog.%player%} is true:
+		cancel event
+	#	wait 1 tick
+		kill the player
+		kick the player because "&c&lYou have combat logged!"
+		broadcast "&c&l%player% &chas combat logged!"
+		loop all items in the player's inventory:
+			drop loop-item at player
+			remove loop-item from player
+		set player's helmet to air
+		set player's chestplate to air
+		set player's leggings to air
+		set player's boots to air

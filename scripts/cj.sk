@@ -1,0 +1,184 @@
+options:
+	NoFuel: &aYou have no fuel!
+	Full: &4You have &4&l100%% fuel!
+	CoalFuel: &aYou now have &4&l%{CoalFuel.%player%}% &aFuel
+	Coalname:&7&lCoal Jetpack
+	Lore:&aThe default Jetpack!
+	Coalprefix: &7[&7&lCoal Jetpack&7]
+
+
+command /Jetpack <text>:
+	trigger:
+		if player is op:
+			if arg 1 is "cj":
+				give player chain chestplate named "{@Coalname}" with lore "{@Lore}"
+				message "&aYou have received {@Coalname}"
+				stop
+			if arg 1 is "bj":
+				give player unbreakable elytra named "&b&lBooster Jetpack" with lore "&aFly like the wind!"
+				message "&aYou have received a Booster Jetpack"
+				stop
+			if arg 1 is "sj":
+				give player chain chestplate named "&6&lSolar Jetpack" with lore "&aHarness the power of the sun!"
+				message "&aYou have received Solar jetpack"
+			else:
+				message "&cThat is not a jetpack!"
+		else:
+			message "&cYou are not allowed to do this!"
+command /CFuel <number>:
+	trigger:
+		player is op
+		if arg 1 < 150:
+			set {CoalFuel.%player%} to arg 1
+			message "&aYou now have &a&l%{CoalFuel.%player%}%&a Fuel"
+		else:
+			set {CoalFuel.%player%} to 150
+			message "&aYou cannot have more than 150 Fuel"
+
+#	  ____            _       _      _                    _    
+#	 / ___|___   __ _| |     | | ___| |_ _ __   __ _  ___| | __
+#	| |   / _ \ / _` | |  _  | |/ _ \ __| '_ \ / _` |/ __| |/ /
+#	| |__| (_) | (_| | | | |_| |  __/ |_| |_) | (_| | (__|   < 
+#	 \____\___/ \__,_|_|  \___/ \___|\__|  __/ \__,_|\___|_|\_\
+#	                                    |_|                    
+on fly toggle:
+	player is not flying
+	player's gamemode is survival
+	lore of chestplate of player contains "{@Lore}"
+	set {_loc} to player's location
+	if {CoalFuel.%player%} <= 0:
+		cancel event
+		wait 1 tick
+		teleport player to {_loc}
+		play raw sound "entity.item.break" for player at player with pitch 1 volume 15
+		message "{@Coalprefix} {@NoFuel}"
+	else:
+		wait 1 tick
+		while player is flying:
+			if lore of chestplate of player contains "{@Lore}":
+				if {CoalFuel.%player%} <= 0:
+					push player up at speed 0.25
+					play raw sound "entity.item.break" for player at player with pitch 1 volume 15
+					message "{@Coalprefix} {@NoFuel}"
+					disallow fly for player
+					wait 1 second
+					allow fly for player
+					stop
+				else:
+					if player doesn't have permission "skript.crafter":
+						if player has permission "skript.vip":
+							remove 0.5 from {CoalFuel.%player%}
+							set action bar of player to "&9&l%{CoalFuel.%player%}% &7Fuel"
+						else:
+							remove 1 from {CoalFuel.%player%}
+							set action bar of player to "&9&l%{CoalFuel.%player%}% &7Fuel"
+					if player is offline:
+						stop
+				wait 1.5 seconds
+			else:
+				play raw sound "entity.item.break" for player at player with pitch 1 volume 15
+				disallow fly for player
+				wait 1 second
+				allow fly for player
+
+every 1 second:
+	loop all players:
+		if gamemode of loop-player is survival:
+			if lore of chestplate of loop-player contains "{@Lore}":
+				allow fly for loop-player
+				stop
+			else if lore of chestplate of loop-player contains "&aHarness the power of the sun!":
+				allow fly for loop-player
+				stop
+			else:
+				disallow fly for loop-player
+				stop
+sharpsk On armor equip:
+	if lore of event-item contains "{@Lore}" or "&aHarness the power of the sun!":
+		allow fly for player
+		message "&aYou equiped your jetpack"
+
+sharpsk On armor unequip:
+	if lore of event-item contains "{@Lore}" or "&aHarness the power of the sun!":
+		disallow fly for player
+		message "&aYou removed your jetpack"
+
+on join:
+	player's gamemode is survival
+	if lore of chestplate of player contains "{@Lore}" or "&aHarness the power of the sun!":
+		allow fly for player
+		stop
+	else if lore of chestplate of player doesn't contain "{@Lore}" or "&aHarness the power of the sun!":
+		disallow fly for player
+		stop
+on jump:
+	player's gamemode is survival
+	if lore of chestplate of player contains "{@Lore}" or "&aHarness the power of the sun!":
+		allow fly for player
+		stop
+	else if lore of chestplate of player doesn't contain "{@Lore}" or "&aHarness the power of the sun!":
+		disallow fly for player
+		stop
+on left click:
+	player's gamemode is survival
+	if lore of chestplate of player contains "{@Lore}" or "&aHarness the power of the sun!":
+		allow fly for player
+		stop
+	else if lore of chestplate of player doesn't contain "{@Lore}" or "&aHarness the power of the sun!":
+		disallow fly for player
+		stop
+
+
+#Effects
+on fly toggle:
+	player's gamemode is survival
+	lore of chestplate of player contains "{@Lore}"
+	wait 1 tick
+	while player is flying:
+		drawDot count 5, particle "redstone", RGB 0, 0, 0, center player, rainbowMode false, visibleRange 32, pulseDelay 0, keepFor 2 ticks
+		play raw sound "block.fire.extinguish" for player at player with volume 0.25 pitch 1 
+		wait 3 ticks
+		if player is offline:
+			stop trigger
+
+#	 _____           _ _ 
+#	|  ___|   _  ___| | |
+#	| |_ | | | |/ _ \ | |
+#	|  _|| |_| |  __/ |_|
+#	|_|   \__,_|\___|_(_)
+on right click with coal:
+	lore of chestplate of player contains "{@Lore}"
+	if player is not sneaking:
+		if {CoalFuel.%player%} = 150:
+			message "{@Coalprefix} {@Full}"
+			stop
+		if {CoalFuel.%player%} >= 135:
+			set {CoalFuel.%player%} to 150
+			remove 1 coal from player
+			message "{@Coalprefix} {@Full}"
+			play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+		if {CoalFuel.%player%} < 150:
+			add 15 to {CoalFuel.%player%}
+			remove 1 coal from player
+			play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+			message "{@Coalprefix} {@CoalFuel}"
+	else:
+		loop 75 times:
+			if player has 1 coal:
+				if {CoalFuel.%player%} = 150:
+					message "{@Coalprefix} {@Full}"
+					stop
+				if {CoalFuel.%player%} >= 135:
+					set {CoalFuel.%player%} to 150
+					remove 1 coal from player
+					message "{@Coalprefix} {@Full}"
+					play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+					stop
+				if {CoalFuel.%player%} < 150:
+					add 15 to {CoalFuel.%player%}
+					remove 1 coal from player
+					play raw sound "entity.experience_orb.pickup" for player at player with pitch 2 volume 0.5
+					message "{@Coalprefix} {@CoalFuel}"
+			else:
+				stop
+			wait 0.5 tick

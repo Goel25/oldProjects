@@ -1,0 +1,94 @@
+command /shop:
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		make player execute "/bs shop"
+
+command /howitworks <player>:
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		command sender is console
+		message "&6&lHow it works" to arg 1
+		message "&aYou gain money by doing tasks" to arg 1
+		message "&asuch as killing mobs, mining, and more." to arg 1
+		message "&aThen you can type &6&l/shop &aand it will" to arg 1
+		message "&atake you into the shop, here you can" to arg 1
+		message "&abuy various things with your money." to arg 1
+		message "&aEach item has a price which will be taken" to arg 1
+		message "&afrom your balance after a purchase!" to arg 1
+		message "&6&lEnjoy!" to arg 1
+#gain $ by:
+#Killing mobs 3-10
+
+on death:
+	if attacker is a player:
+		if "%victim%" is "creeper", "skeleton", "spider", "zombie", "slime", "ghast", "zombie pigman", "enderman", "cave spider", "silverfish", "blaze", "magmacube", "witch", "endermite", "shulker" or "guardian":
+			set {_$} to random number between .5 to 1.5
+			execute console command "eco give %attacker% %{_$}%"
+
+on death:
+	attacker is a player
+	victim is wither or ender dragon
+	set {_$} to random integer between 3000 and 3250
+	execute console command "eco give %attacker% %{_$}%"
+	message "&a&lCONGRATULATIONS! You killed the &c&l%victim%"
+#Mining ores 5-15 Cant use silk touch or mine placed ores
+on mine of any ore:
+	if tool of the player is enchanted with silk touch:
+		stop
+	else:
+		if location of event-block is {PlacedOres::%location of event-block%}:
+			stop
+		else:
+			set {_$} to random number between 1.5 and 2
+			execute console command "eco give %player% %{_$}%"
+on place of any ore:
+	set {PlacedOres::%location of event-block%} to location of event-block
+on mine of 153:
+	if tool of the player is enchanted with silk touch:
+		stop
+	else:
+		if location of event-block is {PlacedOres::%location of event-block%}:
+			stop
+		else:
+			set {_$} to random number between 1.5 and 2
+			execute console command "eco give %player% %{_$}%"
+on place of 153:
+	set {PlacedOres::%location of event-block%} to location of event-block
+
+#Enchanting 10-15
+on enchant:  
+	if event-item is any iron tool or diamond tool or iron armor or diamond armor or book or chain armor:
+		set {_$} to random number between 5 and 6
+		execute console command "eco give %player% %{_$}%"
+#Placing blocks 100 for every 1K placed
+on first join:
+	set {Placed.%player%} to 0
+on place:
+	if {Placed.%player%} is 1000:
+		execute console command "eco give %player% 100"
+		wait 1 tick
+		message "&aYou have earned &6&l100 &afor placing 1,000 blocks!"
+		set {Placed.%player%} to 0
+		add 1 to {Placed.%player%}
+	else:
+		add 1 to {Placed.%player%}
+command /Placed [<offline player>]:
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		if arg 1 is not set:
+			set {_p} to 1000 - {Placed.%player%}
+			message "&aYou need to place &6%{_p}% &amore blocks to earn $100"
+			stop
+		if arg 1 has played before:
+			set {_p} to 1000 - {Placed.%arg 1%}
+			message "&a%arg 1% needs to place &6%{_p}% &amore blocks to earn $100"
+		else:
+			message "&6%arg 1% &chas never played before"
+
+#Voting 100 for every vote

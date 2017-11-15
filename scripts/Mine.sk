@@ -1,0 +1,37 @@
+command /Mine:
+	description: Teleport to a random location in the Mining dimension
+	executable by: players
+	aliases: /Mining
+	trigger:
+		if {Combatlog.%player%} is true:
+			send "&cYou cannot use commands during combat! Please wait!"
+			stop
+		if {cooldown::%player%} is not set:
+			message "&6You will be teleported &c3 &6seconds."
+			set {_loc} to location x coord of player, y coord of player, z coord of player in world world of player
+			loop 60 times:
+				set {_loc1} to location x coord of player, y coord of player, z coord of player in world world of player
+				if {_loc1} isn't {_loc}:
+					message "&cYou have moved! Teleportation canceled!"
+					stop
+				wait 1 tick
+			set {cooldown::%player%} to now
+			run player command "/rtp Mine" as op
+			message "&7[&4&lIm&b&lCrafty&7] &aWelcome to the &7&lMining world! &a""Where all your mining dreams come true!"""
+		if difference between {cooldown::%player%} and now is greater than 60 seconds: 
+			message "&6You will be teleported &c3 &6seconds."
+			set {_loc} to location x coord of player, y coord of player, z coord of player in world world of player
+			loop 60 times:
+				set {_loc1} to location x coord of player, y coord of player, z coord of player in world world of player
+				if {_loc1} isn't {_loc}:
+					message "&cYou have moved! Teleportation canceled!"
+					stop
+				wait 1 tick
+			set {cooldown::%player%} to now
+			run player command "/rtp Mine" as op
+			message "&7[&4&lIm&b&lCrafty&7] &aWelcome to the &7&lMining world! &a""Where all your mining dreams come true!"""
+		else if difference between {cooldown::%player%} and now is less than 60 seconds:
+			set {_diff} to difference between {cooldown::%player%} and now
+			set {_diff} to difference between {_diff} and 1 minute
+			wait 1 tick
+			message "&c&lYou must wait %{_diff}% before using this again"
